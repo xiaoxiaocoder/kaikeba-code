@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <h2>组件化实践</h2>
+    <slot-view></slot-view>
+    <transition-view />
     <k-form style="width: 400px;margin: 0 auto;" :model="form" :rules="rules" ref="formRef">
       <k-form-item label="用户名" prop="username">
         <k-input placeholder="请输入用户名" v-model="form.username"/>
@@ -17,9 +19,14 @@
 </template>
 
 <script>
-
+import SlotView from '@/views/SlotView'
+import TransitionView from '@/views/TransitionView'
 export default {
   name: 'App',
+  components: {
+    SlotView,
+    TransitionView
+  },
   data() {
     return {
       form: {
