@@ -48,3 +48,14 @@ https://cn.vuejs.org/v2/guide/components-slots.html
 1.  修正input中$parent写法的问题
 2.  学习element源码
 
+
+## 收获
+
+1.  Vue.extend
+2.  propsData
+3.  作用域插槽, 
+  1.  2.6 前后作用域插槽写法区别
+  2.  动态指令参数也可以用在v-slot上
+4.  递归组件
+5.  abstract compnent
+6.  transation 动画 https://cn.vuejs.org/v2/guide/transitions.html
