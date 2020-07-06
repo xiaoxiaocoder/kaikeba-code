@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="util.js"></script>
+  <script src="v1.x/KDep.js"></script>
+  <script src="v1.x/KWatcher.js"></script>
+  <script src="v1.x/KObserve.js"></script>
+  <script src="v1.x/KVue.js"></script>
+</head>
+<body>
+  hello
+  <div id="app">
+    <p>{{ msg }}</p>
+    <p k-text="msg"></p>
+    <button @click="count += 1">add {{ count }}</button>
+    <p k-html="desc" @click="handleClick"></>
+    <p k-html="msg" v-on:click="handleClick(msg, $event, 'args')"></p>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: function() {
+        return {
+          msg: new Date().toLocaleTimeString(),
+          count: 1,
+          desc: 'Hi, <strong>there!</strong>'
+        }
+      },
+      methods: {
+        handleClick(text, arg, other) {
+          console.log(this.desc, text, arg, other)
+        }
+      },
+    })
+
+    setInterval(() => {
+      app.msg  = new Date().toLocaleTimeString()
+    }, 1000)
+  </script>
+</body>
+</html>
