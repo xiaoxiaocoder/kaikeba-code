@@ -17,7 +17,8 @@
     <p k-text="msg"></p>
     <button @click="count += 1">add {{ count }}</button>
     <p k-html="desc" @click="handleClick"></>
-    <p k-html="msg" v-on:click="handleClick(msg, $event, 'args')"></p>
+    <p k-html="msg" k-on:click="handleClick(msg, $event, 'args')"></p>
+    <input type="text" k-model="txt">  &nbsp; txt: {{txt}}
   </div>
   <script>
     var app = new Vue({
@@ -26,7 +27,8 @@
         return {
           msg: new Date().toLocaleTimeString(),
           count: 1,
-          desc: 'Hi, <strong>there!</strong>'
+          desc: 'Hi, <strong>there!</strong>',
+          txt: 'text content'
         }
       },
       methods: {

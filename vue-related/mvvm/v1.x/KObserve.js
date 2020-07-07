@@ -2,11 +2,13 @@ class Observer {
   
   constructor(vm, obj) {
     this.vm = vm;
+    this.dep = new Dep()
     def(this, '__ob__', this)
 
     if (Array.isArray(obj)) {
       const argument  = hasProto ? replaceProto : copyProto
       argument(obj)
+      this.observeArray(obj)
     } else {
       this.walk(obj)
     }
@@ -15,16 +17,11 @@ class Observer {
   }
 
   
-  replaceProto(obj) {
-    obj.__proto__ = overridePrototype
+  observeArray(items) {
+    for (let i = 0; i < items.length; i++) {
+      observe(items[i])
+    }
   }
-
-  copyProto(obj) {
-    arrayMethods.forEach(key => {
-      def(obj, key, arrayMethods[key])
-    })
-  }
-
   walk(obj) {
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
@@ -34,25 +31,42 @@ class Observer {
     }
   }
 }
+function replaceProto(obj) {
+  obj.__proto__ = overridePrototype
+}
+
+function copyProto(obj) {
+  arrayMethods.forEach(key => {
+    def(obj, key, arrayMethods[key])
+  })
+}
 
 function observe(obj) {
   if (rawType(obj) !== objType || obj == null) {
     return
   }
-  new Observer(obj)
+  let ob = ob.__ob__
+  if(ob) return
+  return new Observer(obj)
 }
 
 function defineReactive(obj, key, val) {
   // 传入的val有可能为对象, 即对象嵌套的去年情况
-  observe(val)
+  let childOb = observe(val)
 
   // 每创建一个defineReactive, 都会创建一个dep
   let dep = new Dep()
   Object.defineProperty(obj, key, {
     get() {
-      // console.log('getter ', key)
       if (Dep.target) {
         dep.depend(Dep.target)
+
+        if(childOb) {
+          childOb.dep.depend();
+          if(Array.isArray(val)) {
+            dependArray(val)
+          }
+        }
       }
       return val
     },
@@ -67,4 +81,14 @@ function defineReactive(obj, key, val) {
       }
     }
   })
+}
+
+function dependArray(arr) {
+  for (let e,i = 0; i < arr.length; i++) {   
+    e = array[e,i];
+    e && e.__ob__ && e.__ob__.dep.depend()
+    if(Array.isArray(e)) {
+      dependArray(e)
+    }
+  }
 }

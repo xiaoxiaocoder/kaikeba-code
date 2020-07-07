@@ -18,6 +18,8 @@ function Vue(options) {
   return this;
 }
 
+const K_MODEL_DIR = 'k-model'
+const K_BIND_DIR = 'k-bind'
 
 function Compile(el, vm) {
   this.$vm = vm,
@@ -48,9 +50,18 @@ Compile.prototype = {
     })
   },
   compileElement(node, vm) {
+    // 优先检测是否包含v-model指令, 当检测到v-model指令时,将其替换成k-bind:value和k-on:update格式
+    const nodeAttrNames = node.getAttributeNames() || []
+    if (nodeAttrNames.indexOf(K_MODEL_DIR)  >= 0) {
+      const kModelExp = node.getAttribute(K_MODEL_DIR)
+      node.removeAttribute(K_MODEL_DIR)
+      node.setAttribute('k-bind:value', kModelExp)
+      node.setAttribute('k-on:input', `${kModelExp} = $event.target.value`)
+      this.compileElement(node, vm)
+    }
     // 获取节点属性
-    const nodeAttrs = node.attributes
-    Array.from(nodeAttrs).forEach(attr => {
+    const nodeAttrs = Array.from(node.attributes)
+    nodeAttrs.forEach((attr, index) => {
       // k-xxx="exp"
       const attrName = attr.name // k-xxx
       const exp = attr.value // exp
@@ -58,6 +69,8 @@ Compile.prototype = {
       // 判断属性类型
       if(this.isEventBinding(attrName)) { // 事件绑定
         this.bindEvent(node, attrName, exp)          
+      } else if (attrName.startsWith('k-bind:') || attrName.startsWith(':') ) {
+        this.compileKBind(node, attrName, exp)
       } else if (this.isDirective(attrName)) { // 指定绑定
         const dir = attrName.substring(2)
 
@@ -65,6 +78,13 @@ Compile.prototype = {
         this[dir] && this[dir](node, exp)
       }
     })
+  },
+  compileKBind(node, attrName, exp) {
+    const dir = attrName.startsWith('k-bind:') ? attrName.slice(8) : attrName.slice(1);
+    this.update(node, exp, 'value');
+  },
+  valueUpdater(node, value) {
+    node.value = value
   },
   compileText(node, vm) {
     const text = node.textContent.match(/\{\{(.*)\}\}/)
@@ -74,7 +94,6 @@ Compile.prototype = {
     this.update(node, expression, 'text')
   }, 
   text (node, exp) {
-    // node.textContent = this.$vm[exp.trim()]
     this.update(node, exp, 'text')
   },
   html (node, exp) {
@@ -86,9 +105,7 @@ Compile.prototype = {
   htmlUpdater (node, value) {
     node.innerHTML = value
   },
-  /**
-   * 动态绑定都需要创建更新函数以及对应watcher实例
-   */
+  // 动态绑定都需要创建更新函数以及对应watcher实例
   update(node, exp, dir) {
     // 初始化
     exp = exp.trim()
@@ -110,12 +127,15 @@ Compile.prototype = {
     } else {
       // 判断是否是表达式
       if(exp.indexOf('=') > 0) {
-        evt = () => { with(this.$vm) { eval(exp) }; }
+        evt = () => {
+          e = $event = window.event
+          with(this.$vm) { eval(exp) }; 
+        }
       }
     }
 
     if(evt) {
-      let eventName = attrName.startsWith('v-on') ? attrName.slice(5) : attrName.slice(1)
+      let eventName = attrName.startsWith('k-on') ? attrName.slice(5) : attrName.slice(1)
       const vm = this.$vm
       node.addEventListener(eventName, () => {
         evt.call(vm, ...this.resolveEventArgs(vm, args))
@@ -148,7 +168,7 @@ Compile.prototype = {
     return attrName.startsWith('k-')
   },
   isEventBinding(attrName) {
-    return attrName.startsWith('v-on') || attrName.startsWith('@')
+    return attrName.startsWith('k-on') || attrName.startsWith('@')
   }
 }
 
