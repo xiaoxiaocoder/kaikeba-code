@@ -16,11 +16,31 @@
     <p>{{ msg }}</p>
     <p k-text="msg"></p>
     <button @click="count += 1">add {{ count }}</button>
-    <p k-html="desc" @click="handleClick"></>
+    <p k-html="desc" @click.stop.prevent="handleClick"></>
     <p k-html="msg" k-on:click="handleClick(msg, $event, 'args')"></p>
-    <input type="text" k-model="txt">  &nbsp; txt: {{txt}}
+    <!--bug 传参{{ msg }} 只显示msg内容-->
+    <p><button k-on:click="handleClick(msg, $event, 'args')">message: {{ msg }}</button></p>
+    <p><img :src="imgSrc" width="50" alt="error"></p>
+    <p><input type="text" k-model="txt">  &nbsp; txt: {{txt}}</p>
+    <p>
+      <select k-model="select">
+        <option value="1">北京</option>
+        <option value="2">上海</option>
+        <option value="3">广州</option>
+    </select>  &nbsp; select: {{select}}  
+  </p>
+    <p>
+      <input name="radio" type="radio" k-model="radioCheck">  &nbsp; radioCheck: {{radioCheck}}
+      <input name="radio" type="radio" k-model="radioCheck1">  &nbsp; radioCheck1: {{radioCheck1}}
+    </p>
   </div>
   <script>
+    let srcs = [
+      'https://tse2-mm.cn.bing.net/th/id/OIP.Ag8H9mor7DFvLgnPp0q-QgAAAA?w=122&h=171&c=7&o=5&pid=1.7',
+      'https://tse2-mm.cn.bing.net/th/id/OIP.iJn56mxhkFPXOes7AwQ77wHaI_?w=126&h=165&c=7&o=5&pid=1.7',
+      'https://tse1-mm.cn.bing.net/th/id/OIP.gHpnyX3Iy_OJje48newmHgAAAA?w=116&h=179&c=7&o=5&pid=1.7',
+      'https://cn.vuejs.org/images/logo.png'
+    ]
     var app = new Vue({
       el: '#app',
       data: function() {
@@ -28,12 +48,22 @@
           msg: new Date().toLocaleTimeString(),
           count: 1,
           desc: 'Hi, <strong>there!</strong>',
-          txt: 'text content'
+          txt: 'text content',
+          select: '1',
+          radioCheck: false,
+          radioCheck1: false,
+          imgSrc: 'https://cn.vuejs.org/images/logo.png'
         }
       },
       methods: {
-        handleClick(text, arg, other) {
-          console.log(this.desc, text, arg, other)
+        handleClick(msg, arg, other) {
+          if(arguments.length) {
+            this.txt = msg;
+            console.log(msg, arg, other)
+          } else {
+            console.log('no params');
+          }
+          this.imgSrc = srcs[Math.floor(Math.random()*srcs.length)]
         }
       },
     })

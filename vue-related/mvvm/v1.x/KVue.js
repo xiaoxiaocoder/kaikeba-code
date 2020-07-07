@@ -51,37 +51,62 @@ Compile.prototype = {
   },
   compileElement(node, vm) {
     // 优先检测是否包含v-model指令, 当检测到v-model指令时,将其替换成k-bind:value和k-on:update格式
-    const nodeAttrNames = node.getAttributeNames() || []
-    if (nodeAttrNames.indexOf(K_MODEL_DIR)  >= 0) {
-      const kModelExp = node.getAttribute(K_MODEL_DIR)
-      node.removeAttribute(K_MODEL_DIR)
-      node.setAttribute('k-bind:value', kModelExp)
-      node.setAttribute('k-on:input', `${kModelExp} = $event.target.value`)
-      this.compileElement(node, vm)
-    }
+    // const nodeAttrNames = node.getAttributeNames() || []
+    // if (nodeAttrNames.indexOf(K_MODEL_DIR)  >= 0) {
+    //   const kModelExp = node.getAttribute(K_MODEL_DIR)
+    //   node.removeAttribute(K_MODEL_DIR)
+    //   node.setAttribute('k-bind:value', kModelExp)
+    //   node.setAttribute('k-on:input', `${kModelExp} = $event.target.value`)
+    //   this.compileElement(node, vm)
+    // }
     // 获取节点属性
     const nodeAttrs = Array.from(node.attributes)
     nodeAttrs.forEach((attr, index) => {
       // k-xxx="exp"
-      const attrName = attr.name // k-xxx
+      const attrName = attr.name
+        .replace(/^@/, 'k-on:')
+        .replace(/^:/, 'k-bind:')
       const exp = attr.value // exp
       // 暗号: 冬瓜冬瓜我是西瓜
       // 判断属性类型
-      if(this.isEventBinding(attrName)) { // 事件绑定
-        this.bindEvent(node, attrName, exp)          
-      } else if (attrName.startsWith('k-bind:') || attrName.startsWith(':') ) {
-        this.compileKBind(node, attrName, exp)
-      } else if (this.isDirective(attrName)) { // 指定绑定
-        const dir = attrName.substring(2)
+      // if(this.isEventBinding(attrName)) { // 事件绑定
+      //   this.bindEvent(node, attrName, exp)          
+      // } 
+      // else if (attrName.startsWith('k-bind:') || attrName.startsWith(':') ) {
+      //   this.compileKBind(node, attrName, exp)
+      // } 
+      if (this.isDirective(attrName)) { // 指定绑定
 
+        // const dir = attrName.substring(2)
+        // v-html, v-text v-bind:prop v-on:click v-on:click.stop.prevent
+        ///(?:k-(\w+):?)(?<dir>[^.]+)?(?:[.]([^.]+))+/.exec('k-on:click.stop.prevent')
+        const match = attrName.match(/(?:k-(?<dir>\w+))(?:[:](?<def>\w+))?(?:[.](\w+))*/)
+        let dir = null
+        let def = ''
+        let modifier = []
+        if (match && match.groups) { // v-text, v-html
+          let groups = match.groups
+          dir = groups.dir
+          def = groups.def
+          // TODO: 正则匹配modifiers
+          let dotIndex = attrName.indexOf('.')
+          if (dotIndex > 0) {
+            modifier = attrName.slice(dotIndex + 1).split('.')
+            // console.log(modifier)
+          }
+        }
         // 执行指令
-        this[dir] && this[dir](node, exp)
+        this[dir] && this[dir](node, exp, def, modifier)
       }
     })
   },
-  compileKBind(node, attrName, exp) {
-    const dir = attrName.startsWith('k-bind:') ? attrName.slice(8) : attrName.slice(1);
-    this.update(node, exp, 'value');
+  // v-bin:def="exp"
+  bind(node, exp, def) {
+    // const dir = attrName.startsWith('k-bind:') ? attrName.slice(8) : attrName.slice(1);
+    this.update(node, exp, 'bind', def);
+  },
+  bindUpdater(node, value, def) {
+    node[def] = value
   },
   valueUpdater(node, value) {
     node.value = value
@@ -96,31 +121,36 @@ Compile.prototype = {
   text (node, exp) {
     this.update(node, exp, 'text')
   },
-  html (node, exp) {
-    this.update(node, exp, 'html')
-  },
   textUpdater(node, value) {
     node.textContent = value
+  },
+  html (node, exp) {
+    this.update(node, exp, 'html')
   },
   htmlUpdater (node, value) {
     node.innerHTML = value
   },
-  // 动态绑定都需要创建更新函数以及对应watcher实例
-  update(node, exp, dir) {
-    // 初始化
-    exp = exp.trim()
-    const fn = this[dir + 'Updater']
-    fn && fn(node, this.$vm[exp])
-
-    return new Watcher(this.$vm, exp, function(key, val){
-      fn & fn(node, val)
-    })
+  model (node, exp) {
+    this.update(node, exp, 'model')
+    // 源码中事件绑定逻辑 src/platforms/web/runtime/directives/model.js
+    const nodeType = node.type
+    // 下拉组件
+    if('select' === nodeType) {
+      node.addEventListener('select', e => (this.$vm[exp] = e.target.value))
+    } else if ('radio' === nodeType) {
+      // console.log('nodeType', node)
+    } else { // textarea,text, number, email, url ...
+      node.addEventListener('input', (e) => (this.$vm[exp] = e.target.value))
+    }
   },
-  bindEvent(node, attrName, exp) {
+  modelUpdater(node, value) {
+    node.value = value;
+  },
+  on (node, exp, eventName, modifier) {
     // 判断是否带有(, 右括号默认为带有传参的方法
     const bracket = exp.indexOf('(')
     let args = []
-    let evt = this.$vm.$methods[exp]
+    let evt = this.$vm.$options.methods[exp]
     if (bracket > 0) {
       args = exp.slice(bracket + 1, -1).split(',');
       evt = this.$vm.$methods[exp.slice(0, bracket)]
@@ -128,26 +158,22 @@ Compile.prototype = {
       // 判断是否是表达式
       if(exp.indexOf('=') > 0) {
         evt = () => {
-          e = $event = window.event
           with(this.$vm) { eval(exp) }; 
         }
       }
     }
-
     if(evt) {
-      let eventName = attrName.startsWith('k-on') ? attrName.slice(5) : attrName.slice(1)
-      const vm = this.$vm
-      node.addEventListener(eventName, () => {
-        evt.call(vm, ...this.resolveEventArgs(vm, args))
+      node.addEventListener(eventName, (e) => {
+        evt.apply(this.$vm, this.resolveEventArgs(this.$vm, args, e))
       })
     }
   },
-  resolveEventArgs(vm, args) {
+  resolveEventArgs(vm, args, e) {
     return args.map((val, index, arr) => {
       if (typeof val === 'string' && !/'|"/.test(val)) {
         val = val.trim()
         if (val === '$event') {
-          return window.event
+          return e; // window.event
         } 
         val = vm[val]
         if (!val) {
@@ -156,6 +182,17 @@ Compile.prototype = {
         return val
       }
       return val
+    })
+  },
+  // 动态绑定都需要创建更新函数以及对应watcher实例
+  update(node, exp, dir, def) {
+    // 初始化
+    exp = exp.trim()
+    const fn = this[dir + 'Updater']
+    fn && fn(node, this.$vm[exp], def)
+
+    return new Watcher(this.$vm, exp, function(key, val){
+      fn & fn(node, val, def)
     })
   },
   isElement (node) {
