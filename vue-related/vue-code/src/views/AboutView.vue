@@ -6,6 +6,7 @@
     <p @click="$store.dispatch('add')">async count: {{ $store.state.count }}</p>
     <!-- <p @click="show = !show">doubleCount: {{ $store.getters }}</p> -->
     <!-- <p v-if="show">doubleCount from computed: {{ $store.getters.doubleCount }}</p> -->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -15,10 +16,7 @@
       return {
         show: false
       }
-    },
-    mounted () {
-      console.log(this.$store);;
-    },
+    }
   }
 </script>
 

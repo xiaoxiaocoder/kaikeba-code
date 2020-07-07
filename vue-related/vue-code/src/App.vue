@@ -6,6 +6,7 @@
     <transition-view /> -->
 
     <router-link to="/about">AboutView</router-link>&nbsp;
+    <router-link to="/about/info">AboutView Info Page</router-link>&nbsp;
     <router-link to="/form">FormView</router-link>
     <router-view />
   </div>

@@ -9,17 +9,37 @@ class KRouter {
       this.routeMap[route.path] = route
     })
 
-    // this.current = '/about'
-    KVue.util.defineReactive(this, 'current', window.location.hash.slice(1) || '/')
+    // KVue.util.defineReactive(this, 'current', window.location.hash.slice(1) || '/')
+    this.current = window.location.hash.slice(1) || '/'
+    KVue.util.defineReactive(this, 'matched', [])
+    this.matchRoutes()
 
     window.addEventListener('hashchange', this.onHashChange.bind(this))
     window.addEventListener('load', this.onHashChange.bind(this))
   }
   
+  matchRoutes (routes) {
+    routes = routes || this.$options.routes
+    
+    for (const route of routes) {
+      if (route.path === '/' && this.current === '/') {
+        this.matched.push(route)
+      }
+      //  this.current /about/info  父路由 /path
+      if(this.current !== '/' && this.current.startsWith(route.path)) {
+        this.matched.push(route)
 
+        if(route.children) {
+          this.matchRoutes(route.children)
+        }
+        return
+      }
+    }
+  }
   onHashChange() {
     this.current = window.location.hash.slice(1)
-    // console.log(this.current)
+    this.matched = []
+    this.matchRoutes();
   }
 }
 
@@ -37,14 +57,30 @@ KRouter.install = function(Vue) {
   
   // 2. 声明两个全局组件 router-view, router-link
   Vue.component('router-view', {
-    render(h) {
+    functional: true,
+    render(h, { data, parent, children }) {
       // const routes = this.$router.$options.routes
       // const current = this.$router.current
       // const route = routes.find(route => route.path === current)
-      const { routeMap, current } = this.$router
-      const route = routeMap[current]
-      const component = route.component ? route.component: 'div'
-      return h(component.default)
+      // const { routeMap, current } = this.$router
+      // const { routeMap, current } = parent.$router
+      // const route = routeMap[current]
+
+      const { matched } = parent.$router
+      data.routerView = true;
+      let depth = 0;
+      while(parent) {
+        const vnodeData = parent.$vnode && parent.$vnode.data
+        // 当前parent是一个router-view
+        if(vnodeData && vnodeData.routerView) {
+          depth++;
+        }
+
+        parent = parent.$parentl
+      }
+      const route = matched[depth]
+      const component = route ? route.component: null
+      return h(component, data, children)
     }
   })
 
