@@ -24,12 +24,12 @@ export default new KRouter({
     {
       path: "/about",
       name: "aboutView",
-      component: () => require("@/views/AboutView"),
+      component: require("@/views/AboutView"),
     },
     {
       path: "/form",
       name: "formView",
-      component: () => require("@/views/KFormView"),
+      component: require("@/views/KFormView"),
     },
   ],
 });
