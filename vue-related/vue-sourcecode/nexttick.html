@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">{{ msg }}</div>
+  <script>
+    let appDom = document.querySelector('#app')
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          msg: 'ready~'
+        }
+      },
+      mounted () {
+        this.greet();
+      },
+      methods: {
+        greet() {
+          this.msg = 'Hello world1'
+          console.log(1, this.msg, appDom.innerHTML);
+          this.msg = 'Hello world2'
+          console.log(2, this.msg, document.querySelector('#app').innerHTML);
+          Promise.resolve().then(function() {
+            console.log(3, 'Promise resolved');
+          })
+          this.$nextTick(() => {
+            console.log(4, this.msg, appDom, appDom.innerHTML);
+            appDom = document.querySelector('#app')
+            console.log(5, this.msg, appDom, appDom.innerHTML);
+          })
+        }
+      },
+    })
+  </script>
+</body>
+</html>
