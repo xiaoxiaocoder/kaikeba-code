@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>Vue Component<strong> Compiler</strong></p>
+    <div>{{ msg }}</div>
+    <comp></comp>
+  </div>
+  <script>
+    Vue.component('comp', {
+      template: `<h3>This is a Vue component!</h3>`
+    })
+    var app = new Vue({
+      el: '#app',
+      data: {
+        'msg': 'Hello'
+      },
+      created () {
+        console.log(this.$options.render);
+      },
+      mounted () {
+        console.log(this.$options.render);
+      },
+    })
+  </script>
+</body>
+</html>
