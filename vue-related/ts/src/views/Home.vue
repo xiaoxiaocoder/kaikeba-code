@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import About from '@/views/About.vue';
 import { Feature, FeatureSelected, Catch } from '@/types/index.ts';
 
 @Component
