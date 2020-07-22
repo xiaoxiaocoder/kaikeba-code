@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo MVC Composition API</title>
+  <script src="./dist/vue.global.js"></script>
+  <style>
+    .item-finished {
+      color: #ccc;
+      text-decoration: line-through;
+    }
+    </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    // 暗号: see you next time
+    const { createApp, reactive, computed, ref, toRefs, h, onBeforeMount, 
+      provide, inject,  defineComponent, watch, watchEffect} = Vue
+
+    const TodoItem = {
+      name: 'TodoItem',
+      props: ['item'],
+      template: `
+        <p :class="{'item-finished': checked}">
+          <input type="checkbox" v-model="checked" @input.check="handleChecked"/>
+          ID: {{ item.id }} Content: <strong>{{ item.label }}</strong>
+        </p>
+      `,
+      setup(props) {
+        const checked = ref(props.item.finished)
+        // 没有找到emit,on对应的用法, 暂时通过provide, inject 来实现
+        const listRef = inject('listRef')
+        
+        const handleChecked = () => {
+          checked.value = !checked.value
+          // 修改list中对应元素的finished
+          listRef.find(i => i.id === props.item.id).finished = checked.value
+        }
+
+        return { checked, handleChecked }
+      }
+    }
+
+    const TodoList = {
+      name: 'TodoList',
+      props: ['list'],
+      template: `<todo-item v-for="item,index in list" :key="index" :item="item"/>`,
+      render () {
+        return this.list.length 
+              // h 数据对象传参props 直接传参, 和 2.0 render props: {item}
+              ? this.list.map((item, index) => h(TodoItem, { item, key: index }))
+              : 'Empty Data'
+      }
+    }
+
+    createApp({
+      components: { TodoList },
+      template: `
+        <h2>Todo MVC with Composition API. current Todo Items: {{ completed.length }}</h2>
+        <p><input v-model="todo" @keyup.enter="addTodo" placeholder="please input todo item"></p>
+        <todo-list :list="list" />
+      `,
+      provide (){
+        return {
+          list: this.list
+        }
+      },
+      setup() {
+        const state = reactive({ todo: '', list: [] })
+        const completed = computed(() => state.list.filter(i => !i.finished))
+        /** 和watchEffect相比，w
+        watch 允许我们： 懒执行副作用； 更明确哪些状态的改变会触发侦听器重新运行副作用；访问侦听状态变化前后的值。*/
+        watch(completed, () => console.log('completed change', completed))
+        const addTodo = () => {
+          const { list, todo } = state
+          list.push({ id: list.length + 1, label: todo, finished: false })
+        }
+        provide('listRef', state.list)
+        return { ...toRefs(state), completed, addTodo }
+      }
+    }).mount('#app')
+  </script>
+ 
+</body>
+</html>

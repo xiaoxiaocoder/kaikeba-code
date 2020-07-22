@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>count: {{ state.count }}   &nbsp;&nbsp; double count: {{ state.doubleCount }}</p>
+    <button @click="add">plus. 按钮点击了{{times}}次</button>
+  </div>
+  <script>
+    // 暗号: see you next time
+    // 使用composotion-api至少使用reactive、computed和toRefs等常见api。
+    const { createApp, reactive, computed, ref, toRefs, watch } = Vue;
+    const app = createApp({
+      // setup是一个新的组件选项, 它四组件内使用composition API的入口
+      // 调用时刻是初始化属性确定后, beforeCreate之前
+      setup() {
+        // reactive 响应式, 返回一个响应式的对象
+        const state = reactive({
+          count: 1,
+          // 计算属性   computed 返回一个不可变的响应式引用对象
+          //           它封装了getter的返回值
+          doubleCount: computed(() => state.count * 2)
+        })
+        // @事件
+        const add = () => {
+          state.count++
+          // 通过ref封装的基础数据, 在js中要通过.value进行修改
+          times.value++
+        }
+
+        // watch 侦听器
+        watch(() => {
+          console.log('count change:' + state.count)
+        })
+
+        // 使用ref将基础类型转为响应式对象
+        const times = ref(0)
+        return { state, add, times }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
