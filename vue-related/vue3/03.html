@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>逻辑复用</title>
+  <script src="./dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+   <p> mouse current: x: {{ x }} y: {{ y }}</p>
+   <p>current datetime: {{ state }} {{ date }}</p>
+  </div>
+  <script>
+    const { createApp, onMounted, onUnmounted, ref, toRefs, reactive } = Vue
+
+    function useMouseMove() {
+      const x = ref(0)
+      const y = ref(0)
+
+      function mouseMoveHandler(mouseEvent) {
+        const { pageX, pageY } = mouseEvent
+        x.value = pageX
+        y.value = pageY
+      }
+
+      onMounted(() => {
+        window.addEventListener('mousemove', mouseMoveHandler)
+      })
+
+      onUnmounted(() => {
+        window.removeEventListener('mousemove', mouseMoveHandler)
+      })
+
+      return { x, y }
+    }
+
+    function useDateTime() {
+      const state = reactive({
+        date: new Date()
+      })
+      let timmer
+      onMounted(() => {
+        timmer = setInterval(() => {
+          state.date = new Date()
+        }, 1e3)
+      })
+
+      onUnmounted(() => {
+        timmer && clearInterval(timmer)
+      })
+
+      return { state, ...toRefs(state) }
+    }
+
+    createApp({
+      setup() {
+        const { x, y } = useMouseMove()
+        const { state, date } = useDateTime()
+
+        return { x, y, state, date }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
