@@ -50,7 +50,7 @@ export default {
         if (valid) {
           this.$success("success");
         } else {
-          this.$error("error");
+          this.$error({ message: "error", closeable: true});
         }
       });
     },

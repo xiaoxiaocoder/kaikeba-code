@@ -1,35 +1,37 @@
 import Vue from 'vue'
-import Notice from './KNotice'
+// import Notice from './KNotice'
+// import Notice from './KNotice-FLIP'
+import Notice from './KNotice-Velocity'
 
 const NotictCtor = Vue.extend(Notice)
-/**
- * 暗号： 村长喊你来搬砖
- * 创建Notice组件实例
- */
-export function noticeInstance (propties = {}) {
-  const instance = new NotictCtor({ propsData: propties})
-  return instance.$mount()
+let instance
+
+function init(){
+  instance = new NotictCtor()
+  instance.$mount()
+  document.body.appendChild(instance.$el)
 }
 
-// 处理propsData
-function _handlePropsData(config, type){
-  let props = typeof config === 'string' ? { message: config } : config
-  return Object.assign(props, { type })
+const caller = (props = {}) => {
+  if (!instance) {
+    init()
+  }
+  instance.add(props)
 }
 
-// 创建消息为成功的notice
-export function success(config) {
-  const component = noticeInstance(_handlePropsData(config, 'success'))
-  component.show()
+const callerWithType = type => {
+  return function (props) {
+    if(typeof props === 'string') {
+      props = { message: props }
+    }
+    caller(Object.assign(props, { type }))
+  }
 }
 
-// 创建消息为失败的notice
-export function error(config) {
-  const component = noticeInstance(_handlePropsData(config, 'error'))
-  component.show()
+export function install(Vue) {
+  Vue.prototype.$message = caller
+  Vue.prototype.$success = callerWithType('success')
+  Vue.prototype.$error = callerWithType('error')
 }
-
-Vue.prototype.$success = success
-Vue.prototype.$error = error
 
 export default Notice
