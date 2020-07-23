@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       routes: [],
-      currentView: ''
+      currentView: 'KFormView'
     }
   },
   computed: {

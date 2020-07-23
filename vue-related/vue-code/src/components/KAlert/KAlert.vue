@@ -1,12 +1,12 @@
 <template>
-  <div class="k-notice" :class="typeCls">
+  <div class="k-alert" :class="typeCls">
     {{ message }}
   </div>
 </template>
 
 <script>
   export default {
-    name: 'KNotice',
+    name: 'KAlert',
     props: {
       type: {
         type: String,
@@ -25,9 +25,9 @@
       typeCls() {
         const type = this.type
         return {
-          'k-notice--default': type === 'default',
-          'k-notice--success': type === 'success',
-          'k-notice--error': type === 'error',
+          'k-alert--default': type === 'default',
+          'k-alert--success': type === 'success',
+          'k-alert--error': type === 'error',
         }
       }
     },
@@ -46,7 +46,7 @@
 </script>
 
 <style lang="less" scoped>
-.k-notice {
+.k-alert {
     min-width: 380px;
     box-sizing: border-box;
     border-radius: 4px;
