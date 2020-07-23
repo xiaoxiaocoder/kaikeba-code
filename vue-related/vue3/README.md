@@ -1,3 +1,24 @@
+官方文档 
+
+https://v3.vuejs.org/
+
+
+## 安装
+
+### CDN
+
+<script src="https://unpkg.com/vue@next"></script>
+
+### NPM
+
+ npm install vue@next
+
+### CLI
+vue add vue-next
+
+### Vite
+yarn create vite-app <project-name>
+https://segmentfault.com/a/1190000023267394
 # 步骤
 
 
