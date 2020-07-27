@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 // import ContextPage from './views/ContextPage'
-import HocPage from './views/HocPage'
+// import HocPage from './views/HocPage'
+// import FormPage from './views/FormPage'
+import RcFormPage from './views/FormPage/RcFormPage'
 
 export default class App extends Component {
 
@@ -9,7 +11,9 @@ export default class App extends Component {
     return (
         <>
           {/* <ContextPage /> */}
-          <HocPage />
+          {/* <HocPage /> */}
+          {/* <FormPage /> */}
+          <RcFormPage />
         </>
     )
   }

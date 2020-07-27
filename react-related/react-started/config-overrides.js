@@ -2,9 +2,10 @@ const {
   override,
   fixBabelImports,
   addLessLoader,
-  addDecoratorsLegacy
+  addDecoratorsLegacy,
+  addBabelPlugins
 } = require('customize-cra');
-
+const ExportDefaultFromPlugin = require('@babel/plugin-proposal-export-default-from')
 
 module.exports = override(
   fixBabelImports("import", {
@@ -19,5 +20,8 @@ module.exports = override(
       "@primary-color": "red"
     }
   }),
-  addDecoratorsLegacy() // 配置装饰器
+  addDecoratorsLegacy(), // 配置装饰器
+  addBabelPlugins([
+    ExportDefaultFromPlugin
+  ])
 )
