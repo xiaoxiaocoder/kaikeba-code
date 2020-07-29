@@ -22,24 +22,25 @@ class FormStore {
   getFieldValue = name => {
     return this.store[name]
   }
+  getFieldsValue = () => {
+    return this.store
+  }
   setFieldValue = store => {
     this.store = {
       ...this.store,
       ...store
     }
-    console.log('setFieldValue', this.store, this.fieldEntities.length);
+    // console.log('setFieldValue', this.store, this.fieldEntities.length);
     this.fieldEntities.forEach(entity => {
       const { name } = entity.props
       Object.keys(store).forEach(key => {
-        console.log(key, name);
+        // console.log(key, name);
         if(key ===name) {
           entity.onStoreChange()
         }
       })
     })
   }
-
-
   setFieldsValue = stores => {
     this.store = {
       ...this.store,
@@ -54,6 +55,11 @@ class FormStore {
         }
       })
     })
+  }
+  // TODO: 重置标签逻辑
+  resetFieldsValue = () => {
+    this.store = {}
+    console.log('resetFieldsValue', this.store)
   }
 
   validate = () => {
@@ -81,7 +87,7 @@ class FormStore {
     const {onFinish, onFinishFailed} = this.callbacks;
     if (err.length === 0) {
       // 成功的话 执行onFinish
-      onFinish(this.getFiledsValue());
+      onFinish(this.getFieldsValue());
     } else if (err.length > 0) {
       // ，失败执行onFinishFailed
       onFinishFailed(err);
@@ -96,8 +102,10 @@ class FormStore {
     return {
       registerEntity: this.registerEntity,
       setFieldValue: this.setFieldValue,
-      getFieldValue: this.getFieldValue,
       setFieldsValue: this.setFieldsValue,
+      resetFieldsValue: this.resetFieldsValue,
+      getFieldValue: this.getFieldValue,
+      getFieldsValue: this.getFieldsValue,
       submit: this.submit
     }
   }
@@ -118,7 +126,6 @@ function useForm(form) {
 
 
 function Form ({form, children, onFinish, onFinishFailed}) {
-  console.log(form);
   const [ formInstance ] = useForm(form)
   formInstance.setCallback({onFinish, onFinishFailed})
   return (
