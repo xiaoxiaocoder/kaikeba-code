@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 // import ContextPage from './views/ContextPage'
 // import HocPage from './views/HocPage'
-// import FormPage from './views/FormPage'
-import RcFormPage from './views/FormPage/RcFormPage'
+import FormPage from './views/FormPage'
+// import RcFormPage from './views/FormPage/RcFormPage'
 
 export default class App extends Component {
 
@@ -12,8 +12,8 @@ export default class App extends Component {
         <>
           {/* <ContextPage /> */}
           {/* <HocPage /> */}
-          {/* <FormPage /> */}
-          <RcFormPage />
+          <FormPage />
+          {/* <RcFormPage /> */}
         </>
     )
   }

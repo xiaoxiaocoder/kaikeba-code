@@ -4,6 +4,7 @@
 
 1. 表单resetFieldsValue方法实现
 2. 在使用getFieldDecorator时, 使用两次(username, password), 控制台打印, 调用了8次
+3. 执行引入my-rc-form, Form组件初始化了两次
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
