@@ -5,7 +5,7 @@ const {
   addDecoratorsLegacy,
   addBabelPlugins
 } = require('customize-cra');
-const ExportDefaultFromPlugin = require('@babel/plugin-proposal-export-default-from')
+// const ExportDefaultFromPlugin = require('@babel/plugin-proposal-export-default-from')
 
 module.exports = override(
   fixBabelImports("import", {
@@ -21,7 +21,7 @@ module.exports = override(
     }
   }),
   addDecoratorsLegacy(), // 配置装饰器
-  addBabelPlugins([
-    ExportDefaultFromPlugin
-  ])
+  // addBabelPlugins([
+  //   // ExportDefaultFromPlugin
+  // ])
 )
