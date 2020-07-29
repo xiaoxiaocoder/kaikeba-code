@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React
+// , { useEffect } 
+from 'react';
 import Form,  {Item, Input, Button} from '../../components/my-rc-form/index'
 
 
@@ -49,8 +51,6 @@ const pwdRules = [{required: true, message: '请输入密码'}]
  *  5.  Form组件中添加 React.useImperativeHandle(ref, () => formInstance)
  */
 class FormPage extends React.Component {
-  state = {  }
-
   formRef = React.createRef()
 
   componentDidMount() {
@@ -76,7 +76,7 @@ class FormPage extends React.Component {
           onFinish={this.onFinish} 
           onFinishFailed={this.onFinishFailed} >
           <Item label="用户名" name="username" rules={nameRules}>
-            <Input placeholder="username"></Input>
+            <Input value=""placeholder="username"></Input>
           </Item>
           <Item label="密码" name="password" rules={pwdRules}>
             <Input placeholder="password" type="password"></Input>

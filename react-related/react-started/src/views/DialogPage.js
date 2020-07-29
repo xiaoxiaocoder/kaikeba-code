@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import Dialog from '../components/dialog'
 
 class DialogPage extends Component {
-  state= {
-    show: false
+
+  constructor(props) {
+    super(props)
+    this.state= {
+      show: false
+    }
   }
   render() {
     const { show } = this.state
