@@ -22,7 +22,7 @@ export default class Item extends Component {
     const {name} = this.props
     const { setFieldValue, getFieldValue } = this.context;
     return {
-      value: getFieldValue(name),
+      value: getFieldValue(name) || '',
       onChange: event => {
         const newVal = event.target.value;
         setFieldValue({[name]: newVal})
