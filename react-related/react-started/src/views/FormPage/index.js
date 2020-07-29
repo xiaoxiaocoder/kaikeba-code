@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
-import 
-  Form, 
-  {Item, Input, Button} from '../../components/my-rc-form/index'
-
-// import _Form from '../../components/my-rc-form/Form'
-
-// const Form = React.forwardRef(_Form)
+import Form,  {Item, Input, Button} from '../../components/my-rc-form/index'
 
 
 const nameRules = [{required: true, message: '请输入用户名'}]

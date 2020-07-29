@@ -6,6 +6,18 @@
 2. 在使用getFieldDecorator时, 使用两次(username, password), 控制台打印, 调用了8次
 3. 执行引入my-rc-form, Form组件初始化了两次
 
+
+## 知识点
+
+### fuction 表单页面
+- useRef, useEffect 自定义Hook useForm
+
+### class 表单页面
+- React.createRef / React.forwardRef / React.useImperativeHandle
+
+### dialog
+- createProtalAPI
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
