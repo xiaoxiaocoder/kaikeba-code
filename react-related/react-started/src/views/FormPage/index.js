@@ -30,7 +30,13 @@ export default function FormPage () {
       <Item label="密码" name="password" rules={pwdRules}>
         <Input placeholder="password" type="password"></Input>
       </Item>
-      <p><Button>提交</Button>&nbsp;<Button>重置</Button></p>
+      <p><Button>提交</Button>&nbsp;
+      <Button type="button" onClick={(e) => 
+        {
+          e.preventDefault();
+          form.resetFieldsValue();
+        }
+      }>重置</Button></p>
     </Form>
   )
 }

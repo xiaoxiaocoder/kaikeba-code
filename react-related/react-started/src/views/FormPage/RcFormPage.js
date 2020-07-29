@@ -8,9 +8,6 @@ const pwdRules = [{required: true, message: '请输入密码'}]
 // @createForm()
 @myCreateForm
 class RcFormPage extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
   
   componentDidMount() {
     this.props.form.setFieldsValue({ username: "defalut" })
@@ -24,20 +21,24 @@ class RcFormPage extends Component {
       if(err) {
         console.warn('校验失败', err);
       } else {
-        console.log('success');
+        console.log('success', val);
       }
     })
   }
 
   render() {
     // console.log(this.props)
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator, resetFieldsValue } = this.props.form
     return (
       <div>
         <h3>RcFormPage</h3>
         <p>{getFieldDecorator('username', {rules: nameRules})(<Input placeholder="username" />)}</p>
         <p>{getFieldDecorator('password', {rules: pwdRules})(<Input placeholder="password" />)}</p>
         <button onClick={this.submit}>Submit</button>
+        <button type="button" onClick={ e => {
+            e.preventDefault();
+            resetFieldsValue();
+          }}>Reset</button>
       </div>
     )
   }

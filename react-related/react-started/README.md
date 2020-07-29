@@ -1,3 +1,10 @@
+
+
+## TODO
+
+1. 表单resetFieldsValue方法实现
+2. 在使用getFieldDecorator时, 使用两次(username, password), 控制台打印, 调用了8次
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
