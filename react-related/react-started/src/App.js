@@ -4,7 +4,8 @@ import React from 'react';
 // import HocPage from './views/HocPage'
 import FormPage from './views/FormPage'
 // import RcFormPage from './views/FormPage/RcFormPage'
-import DialogPage from './views/DialogPage'
+// import DialogPage from './views/DialogPage'
+import ReduxPage from './views/ReduxPage'
 
 export default function App(props) {
   return (
@@ -13,7 +14,8 @@ export default function App(props) {
         {/* <HocPage /> */}
         {/* <FormPage /> */}
         {/* <RcFormPage /> */}
-        <DialogPage />
+        {/* <DialogPage /> */}
+        <ReduxPage />
     </div>
   );
 }

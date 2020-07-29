@@ -7,10 +7,14 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.4.3",
+    "is-promise": "^4.0.0",
     "rc-form": "^2.4.11",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
