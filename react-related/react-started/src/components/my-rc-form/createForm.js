@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 export default function createForm(Comp) {
+  // let uid = 1;
   let times = 1;
   return class extends Component {
     constructor(props) {
       super(props);
       this.state = {}
       this.options = {}
-      this.decoratorElements = []
+      this.decoratorElements = {}
+      console.log('times :>> ', times++);
     }
     handleChange = e => {
       const { name, value } = e.target;
@@ -15,15 +17,32 @@ export default function createForm(Comp) {
       this.setState({[name]: value})
     }
 
-    getFieldDecorator = (field, option) => Comp => {
+    getFieldDecorator = (field, option) => Comp => { 
+      let cloneElement = this.decoratorElements[field]
+      // const cloneElRef = useRef()
+      if(cloneElement) {
+        if (window.event) {
+          // windwo.event上值, 说明是事件触发,  触发组件更新, 直接调用 props上的onChange, 会造成死循环
+          console.log('getFieldDecorator window.event', cloneElement)
+          const refEl = cloneElement.ref.current
+          console.log(refEl, this.state[field])
+          // this.handleChange(window.event)
+          // return cloneElement
+          // 通过某种机制触发组件更新
+          // cloneElement.props.onChange(window.event) 
+        }
+        console.log('getFieldDecorator', cloneElement.ref.current.value)
+      }
       this.options[field] = option || {};
-      const cloneElement = React.cloneElement(Comp, {
+      const ref = React.createRef()
+      cloneElement = React.cloneElement(Comp, {
+        ref,
         name: field,
         value: this.state[field] || '',
         onChange: this.handleChange
       })
-      console.log(field, option)
-      this.decoratorElements.push(cloneElement);
+
+      this.decoratorElements[field] = cloneElement;
       return cloneElement
     }
     getFieldsValue =() => {

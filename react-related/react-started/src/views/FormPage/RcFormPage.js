@@ -10,8 +10,22 @@ const pwdRules = [{required: true, message: '请输入密码'}]
 class RcFormPage extends Component {
   
   componentDidMount() {
+
     this.props.form.setFieldsValue({ username: "defalut" })
   }
+
+  // componentWillReceiveProps(props, prevProps){
+  //   console.log('componentWillReceiveProps', props, prevProps)
+  // }
+  // UNSAFE_componentWillUpdate(props, prevProps){
+  //   console.log('componentWillUpdate', props, prevProps)
+  //   return false
+  // }
+
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log('shouldComponentUpdate', nextProps, nextState)
+  //   return false
+  // }
 
 
   submit = () => {
@@ -27,13 +41,14 @@ class RcFormPage extends Component {
   }
 
   render() {
-    // console.log(this.props)
+    console.log("props", this.props);
+
     const { getFieldDecorator, resetFieldsValue } = this.props.form
     return (
       <div>
         <h3>RcFormPage</h3>
-        <p>{getFieldDecorator('username', {rules: nameRules})(<Input placeholder="username" />)}</p>
-        <p>{getFieldDecorator('password', {rules: pwdRules})(<Input placeholder="password" />)}</p>
+        <p>{getFieldDecorator('username', {rules: nameRules})(<input placeholder="username" />)}</p>
+        <p>{getFieldDecorator('password', {rules: pwdRules})(<Input placeholder="password" />)}</p> 
         <button onClick={this.submit}>Submit</button>
         <button type="button" onClick={ e => {
             e.preventDefault();

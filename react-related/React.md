@@ -18,6 +18,15 @@
    控制台会有警告如下:![](./docs/imgs/warning-uncontrolled-input.png)
   解决办法: [设置初始值](https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro)
   `value: getFieldValue(name) || ''` 或者 `<input value='' placeholder="username" />`
+  
+3.  在使用getFieldDecorator时, 使用两次(username, password), 控制台打印, 调用了8次(两个原因)
+    原因一: 见Fixed-1
+    原因二:
+        1.  页面RcFormPage render方法里调用了两次, 分别生成username, password
+        2.  RcFromPage里调用setFieldValue设置了username的默认值, 导致组件props修改, 进而造成重新render, 在render里再次调用getFieldDecorator, 所以默认至此会调用四次
+
+        优化措施: TODO:
+         在rcFrom里增加缓存措施, 当再次更新时触发已存在的组件的更新.
 
 
 ## 知识点
