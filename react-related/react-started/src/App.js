@@ -9,6 +9,7 @@ import RcFormPage from './views/FormPage/RcFormPage'
 import HookPage from './views/HooksPages/HookPage'
 import ReactReduxPage from './views/ReduxPages/ReactRedux'
 import ReduxHookPage from './views/HooksPages/ReduxHookPage'
+import RouterPages from './views/RouterPages'
 
 import store from './k-redux/index'
 // import { Provider } from 'react-redux'
@@ -25,9 +26,10 @@ export default function App(props) {
         {/* <ReduxPage /> */}
         {/* <HookPage /> */}
           {/* <ReactReduxPage /> */}
-        <Provider store={store}>
+        {/* <Provider store={store}>
           <ReduxHookPage />
-        </Provider>
+        </Provider> */}
+        <RouterPages />
     </div>
   );
 }
