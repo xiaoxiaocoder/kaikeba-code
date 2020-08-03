@@ -31,6 +31,8 @@
 
 ## 知识点
 
+
+
 ### fuction 表单页面
 - useRef, useEffect 自定义Hook useForm
 
@@ -40,3 +42,37 @@
 ### dialog
 - createProtalAPI
 
+
+-  useEffect, useLayoutEffect
+
+
+-  为什么 hooks 方法返回值为函数?
+   返回值为函数, 方便用户根据索引来解构对象, 如果返回值为对象, 则key固定, 开发不友好
+
+-  [useReducer](https://zh-hans.reactjs.org/docs/hooks-reference.html#usereducer)
+   传入一个redux的reducer方法, 和初始值
+   ```js
+   const initialState = {count: 0};
+
+   function reducer(state, action) {
+      switch (action.type) {
+         case 'increment':
+            return {count: state.count + 1};
+         case 'decrement':
+            return {count: state.count - 1};
+         default:
+            throw new Error();
+      }
+   }
+
+   function Counter() {
+   const [state, dispatch] = useReducer(reducer, initialState);
+   return (
+      <>
+         Count: {state.count}
+         <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+         <button onClick={() => dispatch({type: 'increment'})}>+</button>
+      </>
+   );
+   }
+   ```

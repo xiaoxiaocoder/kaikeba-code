@@ -83,3 +83,16 @@ export function combineReducers (reducers) {
     return hasChangeed ? nextState : state
   }
 }
+
+
+export function bindActionCreators(creatots, dispatch) {
+  const res = {}
+  Object.keys(creatots).forEach(creator => {
+    res[creator] = bindActionCreator(creatots[creator], dispatch)
+  })
+  return res
+}
+
+function bindActionCreator(creator, dispatch) {
+  return (...args) => dispatch(creator(...args))
+}
