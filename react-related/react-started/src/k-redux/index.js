@@ -1,22 +1,18 @@
-// import { createStore, applyMiddleware } from 'redux';
-import { createStore, applyMiddleware } from './k-reduex'
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+// import { createStore, applyMiddleware, combineReducers } from './k-reduex'
 // import thunk from 'redux-thunk'
 // import logger from 'redux-logger'
-import {logger, thunk, promise} from './redux-middleware'
+// eslint-disable-next-line
+import {logger, thunk, promise } from './redux-middleware'
 
+import counterReducer from './counterReducer'
+import visibilityReducer from './visibilityReducer'
 
-function counter(state=0, action) {
-  // console.log('counter', action)
-  switch(action.type) {
-    case 'INCREMENT':
-      return state + 1
-    case 'DECREMENT':
-      return state -1;
-    default:
-      return state;
-  }
-}
+let store = createStore(
+  // counterReducer,
+  combineReducers({count: counterReducer, visibility: visibilityReducer}), 
+  applyMiddleware(thunk, promise) // , logger
 
-let store = createStore(counter, applyMiddleware(thunk, logger, promise))
+)
 
 export default store
