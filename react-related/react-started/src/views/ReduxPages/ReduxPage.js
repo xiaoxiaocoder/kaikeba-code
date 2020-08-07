@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 // import store from '../kredux/redux'
-import store from '../k-redux'
+import store from '../../k-redux'
 
 export default class ReduxPage extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      counter: 0
-    }
+    
     store.subscribe(() => {
-      const value = store.getState()
-      this.setState({counter: value})
+      this.forceUpdate()
     })
   }
+  // componentWillMount(){
+  //   store.dispatch({ type: 'INCREMENT' })
+  // }
 
   asyncAdd = () => {
     store.dispatch((dispatch, getState) => {
@@ -32,11 +32,12 @@ export default class ReduxPage extends Component {
 
 
   render() {
-    const {counter} = this.state
+    console.log('store.getState() :>> ', store.getState());
+    const { count } = store.getState() || {}
     return (
       <div>
         <h2>Redux page</h2>
-        <p>store.counter  ---> { counter }</p>
+        <p>store.counter  ---> { count }</p>
         <p>
           <button onClick={() => store.dispatch({ type: 'INCREMENT' })} >INCREMENT</button>
           <button onClick={() => store.dispatch({ type: 'DECREMENT'})}> DECREMENT </button>
