@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useLayoutEffect } from 'react';
-import counterReducer from '../../k-redux/counterReducer'
+import counterReducer from '../../k-redux/reducers/counter'
 
 const init = arg => {
   console.log('init', arg)
