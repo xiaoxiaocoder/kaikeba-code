@@ -31,5 +31,5 @@ function Header() {
 
 
 function Footer() {
-  return (<footer>Header</footer>)
+  return (<footer>Footer</footer>)
 }
