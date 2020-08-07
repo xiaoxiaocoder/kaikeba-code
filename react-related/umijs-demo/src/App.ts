@@ -62,7 +62,7 @@ export function onRouteChange({location, routes, action, matchedRoutes}) {
   console.log('onRouteChange routes', routes)
   // 设置标题
   if(matchedRoutes.length) {
-    console.log(matchedRoutes);
+    // console.log(matchedRoutes);
     // console.log(matchedRoutes[matchedRoutes.length - 1].route.title);
     document.title = matchedRoutes[matchedRoutes.length - 1].route.title || '--';
   }
