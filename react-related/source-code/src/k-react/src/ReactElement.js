@@ -45,7 +45,7 @@ export function createElement(type, config, children) {
     })
   }
 
-  console.log('defaultProps :>> ', type);
+  // console.log('defaultProps :>> ', type);
   // default Props
   if(type && type.defaultProps) {
     const defaultProps = type.defaultProps
