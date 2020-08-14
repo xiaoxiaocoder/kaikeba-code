@@ -47,8 +47,8 @@ const App = (
   <div className="border">
     <p>全栈</p>
     <a href="https://www.kaikeba.com/">开课吧</a>
-    {/* <ClassComponent name="class" color="red" />
-    <FunctionComponent name="function" /> */}
+    <ClassComponent name="class" color="red" />
+    <FunctionComponent name="function" />
     {/* {[1, 2].map(item => (
       <React.Fragment key={item}>{item}</React.Fragment>
     ))} */}
@@ -59,4 +59,5 @@ const App = (
   </div>
 );
 
-ReactDOM.render(<App />, document.getElementById('root'))
+// ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(App, document.getElementById('root'))
