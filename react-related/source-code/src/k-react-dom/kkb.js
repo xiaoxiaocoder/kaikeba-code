@@ -1,4 +1,4 @@
-import {TEXT, PLACEMENT, UPDATE, DELETION} from "../../const";
+import {TEXT, PLACEMENT, UPDATE, DELETION} from "../const";
 
 // 下一个单元任务  fiber
 let nextUnitOfWork = null;
@@ -29,7 +29,7 @@ let deletions = null;
 // ! vnode  虚拟dom对象
 // ! node  真实dom
 
-export function render(vnode, container) {
+function render(vnode, container) {
   // // vnode->node
   // const node = createNode(vnode);
   // // 再把node插入container
