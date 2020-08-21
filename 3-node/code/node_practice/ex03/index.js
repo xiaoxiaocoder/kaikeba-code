@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs');
 module.exports.parser = path => {
     const readStream = fs.createReadStream(path)
     let reqData = [];
