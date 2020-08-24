@@ -1,0 +1,20 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "zhaoyan",
+  "license": "MIT",
+  "bin": {
+    "hi": "./bin/hello.js",
+    "hh": "./bin/index.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "clear": "^0.1.0",
+    "commander": "^6.0.0",
+    "download-git-repo": "^3.0.2",
+    "figlet": "^1.5.0",
+    "open": "^7.2.0",
+    "ora": "^5.0.0"
+  }
+}
