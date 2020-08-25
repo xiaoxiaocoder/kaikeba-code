@@ -8,6 +8,13 @@ const open = require('open')
 const log = content => console.log(chalk.green.bold(content))
 const spawn = async (...args) => {
   const { spawn } = require('child_process')
+  const options = args[args.length - 1]
+  if(process.platform === 'win32') {
+    // 设置shell选项为true, 以隐式调用cmd
+    options.shell = true
+  } else {
+    console.log('Linux/Unix')
+  }
   return new Promise(resolve => {
     const proc = spawn(...args)
     proc.stdout.pipe(process.stdout)
@@ -26,7 +33,7 @@ module.exports = async name => {
 
   // 克隆项目
   log(`🛩 创建项目: ${name}`)
-  // await clone('su37josephxia/vue-template', name)
+  await clone('su37josephxia/vue-template', name)
   
   // 安装依赖
   log('安装依赖...')

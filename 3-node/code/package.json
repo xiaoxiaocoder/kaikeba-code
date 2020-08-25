@@ -1,0 +1,10 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "zhaoyan",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.13.0"
+  }
+}
