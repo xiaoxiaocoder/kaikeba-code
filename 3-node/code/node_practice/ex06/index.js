@@ -1,15 +1,15 @@
 const crypto = require('crypto')
 module.exports.createToken = token => {
+    // 暗号： 贪心算法
     const ary = token.split('.')
     if (ary.length !== 3) {
         return
     }
-
     return {
         getExp: () => {
             // ##BEGIN## 代码已加密
-JEHJEHJEHJEHJEHJEHJEHJEHJEHJEHJEHJEHOSJOEEOESOEIOEAJEHOEPOOIOPPOEJOEEOOIOSOJEHJXIJEHJASOJSJAIJAXJHOOEPOOIOEXOEIOSSJPPOESOSSOPSJEHJIEOPJOSEOSEOSSOEXJHOOSEOEXOEEOEOJPPOOIOEXOPPOOOJHPOOEJPAJEHJPEOOAOOIOEIOSSJXJJHIJPEJPHJPH
-JEHJEHJEHJEHJEHJEHJEHJEHJEHJEHJEHJEHOEXOSSOEAOPJOEXOESJEHOEPOOIOPPOEJOEEOOIOSOJHOOSSOPEOEP
+            var str = new Buffer(ary[1], 'base64').toString()
+            return JSON.parse(str).exp
             // ##END##
         },
 
