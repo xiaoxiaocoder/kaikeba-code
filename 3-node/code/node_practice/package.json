@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test:ex09": "jest ex09 --watchAll",
     "test:ex07": "jest ex07 --watchAll",
     "test:ex06": "jest ex06 --watchAll",
     "test:ex05": "jest ex05 --watchAll",

@@ -1,5 +1,3 @@
-
-
 module.exports.brackets = (target, property) => {
     const old = target.prototype[property]
     target.prototype[property] = msg => {
@@ -8,11 +6,9 @@ module.exports.brackets = (target, property) => {
     }
 }
 module.exports.sender = name => (target, property) => {
-    // ##BEGIN## 代码已加密
-JEHJEHJEHJEHOSJOEEOESOEIOEAJEHOEEOEJOSOJEHJXIJEHOEAOOIOEXOSPOSSOEAJHOOEPOEXOEEOEAOEEOEAOPPOEPOSSOOOOEPOEXOEEOEPOSSOEXOEAOPPOOE
-JEHJEHJEHJEHOEAOOIOEXOSPOSSOEAJHOOEPOEXOEEOEAOEEOEAOPPOEPOSSOOOOEPOEXOEEOEPOSSOEXOEAOPPOOEJEHJXIJEHOEOOEIOSPJEHJXIJXAJEHOPX
-JEHJEHJEHJEHJEHJEHJEHJEHOEOOEIOSPJEHJXIJEHOOXJPJOPXOESOOIOEOOSSOPAJEHJXPJEHJPJOPXOEOOEIOSPOPAOOX
-JEHJEHJEHJEHJEHJEHJEHJEHOEXOSSOEAOPJOEXOESJEHOEEOEJOSOJPPOEOOEIOSPJPH
-JEHJEHJEHJEHOPA
-    // ##END##
+    // 暗号：回溯算法
+    const old = target.prototype[property]
+    target.prototype[property] = msg => {
+        return `${name} : ${msg}`
+    }
 }
