@@ -1,0 +1,23 @@
+{
+  "name": "practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:ex03": "jest ex03 --watchAll",
+    "test:ex02": "jest ex02 --watchAll",
+    "test:ex01": "jest ex01 --watchAll",
+    "test": "jest",
+    "watch": "jest --watchAll",
+    "coverage": "jest --coverage",
+    "encrypt": "node ./tools/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "jest": "^26.0.1",
+    "sequelize": "^6.2.3",
+    "sqlite3": "^4.2.0"
+  }
+}
