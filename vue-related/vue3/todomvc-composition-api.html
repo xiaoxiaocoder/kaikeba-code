@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo MVC Composition API</title>
+  <script src="./dist/vue.global.js"></script>
+  <style>
+    .item-finished {
+      color: #ccc;
+      text-decoration: line-through;
+    }
+    </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    // 暗号: see you next time
+    const { createApp, reactive, computed, ref, toRefs, h, onBeforeMount, 
+      provide, inject,  defineComponent, watch, watchEffect} = Vue
+
+    const TodoItem = {
+      name: 'TodoItem',
+      props: ['item'],
+      template: `
+        <p :class="{'item-finished': checked}">
+          <input type="checkbox" v-model="checked" @input.check="handleChecked"/>
+          ID: {{ item.id }} Content: <strong>{{ item.label }}</strong>
+        </p>
+      `,
+      setup(props, context) {
+        const { attrs, slots, emit } = context
+        const checked = ref(props.item.finished)
+        // 没有找到emit,on对应的用法, 暂时通过provide, inject 来实现
+        // const listRef = inject('listRef')
+        watch(props.item, (newVal, prev) => {
+          console.log('TodoItem', newVal, prev);
+        })
+        const handleChecked = () => {
+          checked.value = !checked.value
+          // 修改list中对应元素的finished
+          // listRef.find(i => i.id === props.item.id).finished = checked.value
+          emit('item-check', props.item, checked.value)
+        }
+
+        return { checked, handleChecked }
+      }
+    }
+
+    const TodoList = {
+      name: 'TodoList',
+      props: ['list'],
+      template: `<todo-item v-for="item,index in list" :key="index" :item="item"/>`,
+      // emits: {
+      //   'item-check': (item, checked) => {
+      //     console.log('TodoList', item, checked);
+      //   }
+      // },
+      render () {
+        console.log(this);
+        return this.list.length 
+              // h 数据对象传参props 直接传参, 和 2.0 render props: {item}
+              ? this.list.map((item, index) => h(TodoItem, { item, key: index }))
+              : 'Empty Data'
+      }
+    }
+
+    createApp({
+      components: { TodoList },
+      template: `
+        <h2>Todo MVC with Composition API. current Todo Items: {{ completed.length }}</h2>
+        <p><input v-model="todo" @keyup.enter="addTodo" placeholder="please input todo item"></p>
+        <todo-list :list="list"  @item-check="handleCheck"/>
+      `,
+      provide (){
+        return {
+          list: this.list
+        }
+      },
+      setup(props, context) {
+        // console.log(props, context);
+        const state = reactive({ todo: '', list: [] })
+        const completed = computed(() => state.list.filter(i => !i.finished))
+        /** 和watchEffect相比，w
+        watch 允许我们： 懒执行副作用； 更明确哪些状态的改变会触发侦听器重新运行副作用；访问侦听状态变化前后的值。*/
+        watch(completed, () => console.log('completed change', completed))
+        const addTodo = () => {
+          const { list, todo } = state
+          list.push({ id: list.length + 1, label: todo, finished: false })
+        }
+        // provide('listRef', state.list)
+
+        const handleCheck = (item, checked) => {
+          console.log('createApp', item, checked);
+          state.list.find(i => i.id === item.id).finished = checked
+        }
+        return { ...toRefs(state), completed, addTodo, handleCheck }
+      }
+    }).mount('#app')
+
+    /**
+      warning.ts:68 [Vue warn]: Extraneous non-emits event listeners (item-check) were passed to component but could not be automatically inherited because component renders fragment or text root nodes. If the listener is intended to be a component custom event listener only, declare it using the "emits" option. 
+  at <TodoList list= [__v_reactive: Proxy] onItem-check=fn<handleCheck> > 
+  at <App>
+warn @ warning.ts:68
+renderComponentRoot @ componentRenderUtils.ts:162
+componentEffect @ renderer.ts:1267
+reactiveEffect @ effect.ts:93
+effect @ effect.ts:62
+setupRenderEffect @ renderer.ts:1259
+mountComponent @ renderer.ts:1198
+processComponent @ renderer.ts:1127
+patch @ renderer.ts:473
+mountChildren @ renderer.ts:777
+processFragment @ renderer.ts:1060
+patch @ renderer.ts:449
+componentEffect @ renderer.ts:1297
+reactiveEffect @ effect.ts:93
+effect @ effect.ts:62
+setupRenderEffect @ renderer.ts:1259
+mountComponent @ renderer.ts:1198
+processComponent @ renderer.ts:1127
+patch @ renderer.ts:473
+render @ renderer.ts:2119
+mount @ apiCreateApp.ts:226
+app.mount @ index.ts:70
+(anonymous) @ todomvc-composition-api.html:99
+23:05:46.149 todomvc-composition-api.html:60 Proxy {…}
+      */
+  </script>
+ 
+</body>
+</html>

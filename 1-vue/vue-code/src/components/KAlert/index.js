@@ -1,4 +1,10 @@
 import Vue from 'vue'
+// import Notice from './KNotice'
+// import Notice from './KNotice-FLIP'
+import Notice from './KNotice-Velocity'
+
+const NotictCtor = Vue.extend(Notice)
+let instance
 import KAlert from './KAlert'
 
 const AlertCtor = Vue.extend(KAlert)
@@ -11,12 +17,33 @@ export function alertInstance (propties = {}) {
   return instance.$mount()
 }
 
-// 处理propsData
-function _handlePropsData(config, type){
-  let props = typeof config === 'string' ? { message: config } : config
-  return Object.assign(props, { type })
+function init(){
+  instance = new NotictCtor()
+  instance.$mount()
+  document.body.appendChild(instance.$el)
 }
 
+const caller = (props = {}) => {
+  if (!instance) {
+    init()
+  }
+  instance.add(props)
+}
+
+const callerWithType = type => {
+  return function (props) {
+    if(typeof props === 'string') {
+      props = { message: props }
+    }
+    caller(Object.assign(props, { type }))
+  }
+}
+
+export function install(Vue) {
+  Vue.prototype.$message = caller
+  Vue.prototype.$success = callerWithType('success')
+  Vue.prototype.$error = callerWithType('error')
+}
 // 创建消息为成功的notice
 export function success(config) {
   const component = alertInstance(_handlePropsData(config, 'success'))
