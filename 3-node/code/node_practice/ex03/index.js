@@ -3,14 +3,16 @@ module.exports.parser = path => {
     const readStream = fs.createReadStream(path)
     let reqData = [];
     let size = 0;
-    // 暗号: XXX
+    // 暗号：二分查找
     return new Promise(resolve => {
          // ##BEGIN## 代码已加密
-        readStream.on('data', (chunk) => {
-            reqData.push(chunk)
+        readStream.on('data', (data) => {
+            reqData.push(data)
+            size += data.length
         })
         readStream.on('end',() => {
-            resolve(JSON.parse(reqData))
+            const buf = Buffer.concat(reqData, size)
+            resolve(JSON.parse(buf))
         })
          // ##END##
     })
