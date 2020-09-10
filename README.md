@@ -1,32 +1,20 @@
-## 代码实践
+# 代码实践
 
-##  TODO
+##  Vue
 
-### Vue
+- [TODO](./1-vue/../README.md)
 
-#### typescript
+## React
 
-1. Home.vue文件中, 引用 `'@/types/index.ts` 报An import path cannot end with a '.ts' extension. Consider importing '@/types/index' instead.Vetur(2691)
+- [Q&A](./2-react/README.md)
+- [TODO](./2-react/TODO.md)
+- [React](./2-react/React.md)
+- [Redux](./2-react/Redux.md)
+- [React-Redux](./2-react/React-Redux.md)
+- [Redux-saga](./2-react/Redux-saga.md)
+- [dva](./2-react/dva.md)
+- []  umijs
 
+## Node
 
-## Fixed
-
-### Vue
-
-#### typescript
-
-1. main.ts中. `import App from "./App.vue";` 会报 找不到模块./App.vue
-  解决方法: 新建.d.ts文件, 如vue-sfc.d.ts文件
-
-  ```ts
-    // vue-sfc.d.ts
-    declare module "*.vue" {
-      import Vue from 'vue';
-      export default Vue;
-    }
-  ```
-
-  原因:
-    TODO
-
-2. 
+1.  [CLI](./3-node/README.md)
