@@ -6,7 +6,9 @@ const renderer = require('vue-server-renderer').createRenderer()
 
 server.get('*', (req, res) => {
 
-  const app = new Vue({
+if(req.url === '/favicon.ico') return res.end()
+
+const app = new Vue({
     data: {
       url: req.url || '/'
     },

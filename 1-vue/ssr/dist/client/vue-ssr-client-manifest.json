@@ -1,70 +1,68 @@
 {
-  "publicPath": "",
+  "publicPath": "/",
   "all": [
-    "1.ca0caa524e004c365ae6.js",
-    "1.ca0caa524e004c365ae6.js.map",
-    "2.25c60f3368c4ba7f83f3.js",
-    "2.25c60f3368c4ba7f83f3.js.map",
-    "common.64c3369a5c37e96104bc.css",
-    "common.64c3369a5c37e96104bc.css.map",
-    "main.64c3369a5c37e96104bc.js",
-    "main.64c3369a5c37e96104bc.js.map"
+    "favicon.ico",
+    "index.html",
+    "js/chunk-2d21a3d2.6bcf576a.js",
+    "js/chunk-2d21a3d2.6bcf576a.js.map",
+    "js/chunk-2d22bf82.ebc40a96.js",
+    "js/chunk-2d22bf82.ebc40a96.js.map",
+    "js/chunk-vendors.65ad9438.js",
+    "js/chunk-vendors.65ad9438.js.map",
+    "js/main.9dce1bf1.js",
+    "js/main.9dce1bf1.js.map"
   ],
   "initial": [
-    "main.64c3369a5c37e96104bc.js",
-    "common.64c3369a5c37e96104bc.css"
+    "js/chunk-vendors.65ad9438.js",
+    "js/main.9dce1bf1.js"
   ],
   "async": [
-    "1.ca0caa524e004c365ae6.js",
-    "2.25c60f3368c4ba7f83f3.js"
+    "js/chunk-2d21a3d2.6bcf576a.js",
+    "js/chunk-2d22bf82.ebc40a96.js"
   ],
   "modules": {
-    "22688dbf": [
-      6,
-      4,
-      7,
-      5
+    "e819bd22": [
+      8,
+      9
     ],
     "9c066958": [
       6,
-      4,
-      7,
-      5
+      7
     ],
-    "0b46cf02": [
+    "22688dbf": [
       6,
-      4,
-      7,
-      5
+      7
     ],
     "620cda51": [
       6,
-      4,
-      7,
-      5
+      7
     ],
-    "50b3a9eb": [
-      6,
-      4,
-      7,
-      5
+    "42bbaccf": [
+      8,
+      9
     ],
-    "35beb242": [
-      6,
-      4,
-      7,
-      5
+    "04b7b58c": [
+      8,
+      9
     ],
-    "eef07134": [
+    "1da832d5": [
       6,
-      4,
-      7,
-      5
+      7
     ],
-    "791c3e72": [
-      6,
+    "5797ba5c": [
+      8,
+      9
+    ],
+    "7d9ae198": [
+      8,
+      9
+    ],
+    "6f6dad22": [
+      2,
+      3
+    ],
+    "5ad00d54": [
       4,
-      7,
       5
     ]
   }

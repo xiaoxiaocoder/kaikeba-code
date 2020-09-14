@@ -2,7 +2,6 @@
 
 import { createApp } from './app'
 
-
 export default context => {
   /**
    * 因为有可能会是已不够了钩子函数或㢟, 所以返回一个Promise,
@@ -16,6 +15,7 @@ export default context => {
 
     // 等到router将可能的异步组件和钩子函数解析完
     router.onReady(() => {
+
       const matchedComponents = router.getMatchedComponents()
       // 匹配不到的路由, 执行reject函数, 并返回404
       if(!matchedComponents.length) {
@@ -37,6 +37,6 @@ export default context => {
         resolve(app)
       }).catch(reject)
     })
-  })
+  }).catch(err => console.log(err))
 
 }

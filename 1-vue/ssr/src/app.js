@@ -1,10 +1,15 @@
 // 通用entry(unversal entry)
-import Vue from 'vue'
-import App from './App.vue'
-import { createRouter } from './router'
-import { createStore } from './store'
+// import Vue from 'vue'
+// import App from './App.vue'
+// import { createRouter } from './router'
+// import { createStore } from './store'
 
-export function createApp(context) {
+const Vue = require('vue');
+const App = require('./App.vue');
+const { createRouter } = require('./router');
+const { createStore } = require('./store');
+
+module.exports = function createApp(context) {
   const router = createRouter()
   const store = createStore()
 

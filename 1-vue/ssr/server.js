@@ -1,46 +1,38 @@
 const path = require('path');
 const express = require('express')
 const fs = require('fs')
-const { createBundleRenderer } = require('vue-server-renderer')
-
-const resolve = dir => path.resolve(__dirname, dir)
-const serve = (path, cache) => express.static(resolve(path), {
-  maxAge: cache && isProd ? 60 * 60 * 24 * 30 : 0
-})
-const isProd = process.env.NODE_ENV === 'production'
 
 const app = express()
 
+// 获取文件路径
+const resolve = (dir) => require("path").resolve(__dirname, dir);
 
 // 第 1 步：开放dist/client目录，关闭默认下载index页的选项，不然到不了后面路由
-app.use(express.static(resolve('./dist/client'), {index: false}))
-app.use(express.static(resolve('./public')))
+app.use(express.static(resolve("./dist/client"), { index: false }));
 
+// 第 2 步：获得一个createBundleRenderer
+const { createBundleRenderer } = require("vue-server-renderer");
 
-const clientManifest = require(resolve('./dist/client/vue-ssr-client-manifest.json'));
+// 第 3 步：服务端打包文件地址
+const bundle = resolve("./dist/server/vue-ssr-server-bundle.json");
 
-const serverBundle = require(resolve('./dist/server/vue-ssr-server-bundle.json'))
-
-const renderer = createBundleRenderer(serverBundle, {
-  runInNewContext: false, 
-  template: fs.readFileSync(resolve('./src/index.template.html'), 'utf-8'),
-  clientManifest
-})
-
-app.get('*', async (req, res) => {
-  const context = { url: req.url }
-
-  try {
-    const html = await renderer.renderToString(context)
-    res.end(html)
-  } catch (error) {
-    res.status(500).end('server error' + error.message)
-  }
-})
-
-
-
-
+// 第 4 步：创建渲染器
+const renderer = createBundleRenderer(bundle, {
+  runInNewContext: false, // https://ssr.vuejs.org/zh/api/#runinnewcontext
+  template: require("fs").readFileSync(resolve("./public/index.html"), "utf8"), // 宿主文件
+  clientManifest: require(resolve(
+    "./dist/client/vue-ssr-client-manifest.json"
+  )), // 客户端清单
+});
+app.get("*", async (req, res) => {
+  // 设置url和title两个重要参数
+  const context = {
+    title: "ssr test",
+    url: req.url,
+  };
+  const html = await renderer.renderToString(context);
+  res.send(html);
+});
 
 app.listen(8080, () => {
   console.log('server listening at 8080. http://localhost:8080')

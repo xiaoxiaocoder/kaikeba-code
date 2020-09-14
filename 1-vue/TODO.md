@@ -1,10 +1,12 @@
 # TODO
 
 - ssr
-#### typescript
+  - server/04.js
+  - 
+
+## typescript
 
 1. Home.vue文件中, 引用 `'@/types/index.ts` 报An import path cannot end with a '.ts' extension. Consider importing '@/types/index' instead.Vetur(2691)
-
 
 ## Fixed
 

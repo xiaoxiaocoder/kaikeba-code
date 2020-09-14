@@ -1,23 +1,27 @@
 const path = require('path')
-const createApp = require('../src/app.bak')
+const fs = require('fs');
+const createApp = require('../src/app')
 const server = require('express')()
 
 const resolve = dir => path.resolve(__dirname, dir)
 
 const renderer = require('vue-server-renderer').createRenderer({
-  template: require('fs').readFileSync(resolve('../src/index.template.html'), 'utf-8')
+  template: fs.readFileSync(resolve('./index.template.html'), 'utf-8')
 })
 
 
 server.get('*', (req, res) => {
-  const context = { url: req.url }
+  const url = req.url
+  if(url === '/favicon.ico') return res.end()
+
+  const context = { url }
   
   createApp(context).then(app => {
     renderer.renderToString(
       app, 
       // 渲染上下文对象
       {
-        title: 'hello',
+        title: 'Async Component',
         meta: `
           <meta name="keyword" content="vue, ssr, vue-ssr">
           <meta name="description" content="vue ssr">

@@ -13,6 +13,8 @@ const renderer = require('vue-server-renderer').createRenderer({
 
 
 server.get('*', (req, res) => {
+  if(req.url === '/favicon.ico') return res.end()
+
   const router = new Router({
     routes: [
       { path: '/', component: {template: '<div>Index Page</div>'} },
