@@ -79,3 +79,8 @@ chunks
 #### clean-webpack-plugin
 
 
+## 其他工具
+
+- [glob](https://www.npmjs.com/package/glob)
+Match files using the patterns the shell uses, like stars and stuff.
+
