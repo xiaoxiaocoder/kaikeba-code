@@ -84,3 +84,39 @@ chunks
 - [glob](https://www.npmjs.com/package/glob)
 Match files using the patterns the shell uses, like stars and stuff.
 
+## 知识点
+
+-  通用配置
+```
+    - module  
+      - rules
+        - less
+          - style-loader/miniCssExtractPlugin.loader
+          - css-loader
+          - autoprefixer-loader
+          - less-loader
+        - image (png, jpg, jpeg, gif)
+          - url-loader(推荐)
+          - file-loader
+        - js
+          - ⭐️ babel-loader(配置)
+        - font
+          - file-loader
+        - svg
+          - svg-inline-loader
+          - svg-sprite-loader
+    - plugins
+      - clean-webpack-plugin
+      - html-webpack-plugin
+      - mini-css-extract-plugin
+```
+
+- 单页面配置
+- 多页面配置
+- hmr
+- WebpackDevServer
+- babel
+    @babel/core (corejs 2, 3)
+    @babel/preset-env
+    polyfill 及按需引用
+- 自定义plugin（本质：对webpack功能进行扩展）
