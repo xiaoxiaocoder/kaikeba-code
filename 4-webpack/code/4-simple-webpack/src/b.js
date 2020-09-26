@@ -1,0 +1,1 @@
+export const b = 'bbbbbb from b.js'
