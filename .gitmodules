@@ -1,0 +1,3 @@
+[submodule "1-vue/vue-webpack-big-file-optimize"]
+	path = 1-vue/vue-webpack-big-file-optimize
+	url = https://github.com/xiaoxiaocoder/vue-webpack-optimize
