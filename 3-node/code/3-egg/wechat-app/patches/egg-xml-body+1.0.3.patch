@@ -1,0 +1,40 @@
+diff --git a/node_modules/egg-xml-body/config/config.default.js b/node_modules/egg-xml-body/config/config.default.js
+index deac2a0..5696b1b 100644
+--- a/node_modules/egg-xml-body/config/config.default.js
++++ b/node_modules/egg-xml-body/config/config.default.js
+@@ -2,13 +2,13 @@
+ 
+ /**
+  * egg-xml-body default config
+- * @member Config#xmlBody
++ * @member Config#xmlBodyParser
+  * @property {String} encoding - request encoding
+  * @property {String} limit - limit of the body
+  * @property {String} key redefine what the property name to use instead of the default body, ctx.request.body
+  * @property {Object} xmlOptions see the xml2js options for detail
+  */
+-exports.xmlBody = {
++exports.xmlBodyParser = {
+   encoding: 'utf8',
+   limit: '1mb',
+   key: 'body',
+diff --git a/node_modules/egg-xml-body/index.d.ts b/node_modules/egg-xml-body/index.d.ts
+new file mode 100644
+index 0000000..bc70b22
+--- /dev/null
++++ b/node_modules/egg-xml-body/index.d.ts
+@@ -0,0 +1,14 @@
++import { PlainObject } from 'egg';
++
++interface xmlBodyParser extends PlainObject {
++  encoding?: string;
++  limit?: string;
++  key?: string;
++  xmlOptions?: PlainObject;
++}
++
++declare module 'egg' {
++  interface EggAppConfig {
++    xmlBodyParser?: xmlBodyParser
++  }
++}

@@ -1,0 +1,25 @@
+diff --git a/node_modules/egg-wechat-api/index.d.ts b/node_modules/egg-wechat-api/index.d.ts
+new file mode 100644
+index 0000000..4d516df
+--- /dev/null
++++ b/node_modules/egg-wechat-api/index.d.ts
+@@ -0,0 +1,19 @@
++import API from "co-wechat-api";
++
++declare class WeChatAPIConfig {
++  appid: string;
++  /**小程序appsecret */
++  appsecret: string;
++  /** 用于验证是否微信服务器发送的请求 */
++  token?: string;
++}
++
++declare module 'egg' {
++  interface Application {
++    wechatApi: API;
++  }
++
++  interface EggAppConfig {
++    wechatApi: WeChatAPIConfig;
++  }
++}

@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "nat": "/Users/finup/tools/NAT/natapp -authtoken=b3cf20d1febfc88b"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "co-redis": "^2.1.1",
+    "co-wechat": "^2.4.0",
+    "co-wechat-api": "^3.10.0",
+    "koa-router": "^9.4.0",
+    "koa-static": "^5.0.0",
+    "koa-xml-body": "^2.2.0",
+    "redis": "^3.0.2"
+  }
+}
