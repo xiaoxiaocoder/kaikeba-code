@@ -17,6 +17,10 @@ const plugin: EggPlugin = {
   xmlBody: {
     enable: true,
     package: 'egg-xml-body',
+  },
+  sequelize: {
+    enable: true,
+    package: 'egg-sequelize'
   }
 };
 

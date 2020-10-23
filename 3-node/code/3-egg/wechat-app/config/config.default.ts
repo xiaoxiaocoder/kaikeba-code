@@ -33,7 +33,8 @@ export default (appInfo: EggAppInfo) => {
     },
     redis: {
       client: {
-        host: '172.19.132.241', // Redis host
+        // host: '172.19.132.241', // Redis host
+        host: '127.0.0.1', // Redis host
         port: 47346,  // Redis port
         password: 'ojNKIAnC3FEwXTfI',
         db: 0,
@@ -48,6 +49,25 @@ export default (appInfo: EggAppInfo) => {
       //     db: 0,
       //   }
       // }
+      sequelize: {
+        // delegate: 'myModel', // load all models to `app[delegate]` and `ctx[delegate]`, default to `model`
+        // baseDir: 'my_model', // load all files in `app/${baseDir}` as models, default to `model`
+        // exclude: 'index.js', // ignore `app/${baseDir}/index.js` when load models, support glob and array
+        // more sequelize options
+        host: 'localhost',
+        dialect: 'sqlite', // 指定链接数据库类型  'mysql'|'mariadb'|'sqlite'|'postgres'|'mssql',
+        // 连接池
+        pool: {
+          max: 5,
+          min: 0,
+          acquire: 30000,
+          // 连接最大空置时间（毫秒），超时后将释放连接
+          idle: 10000 
+        },
+        // 仅 SQLite 适用
+        storage: './wechat.db',
+        operatorsAliases: false,
+      }
   };
 
   // the return config will combines to EggAppConfig

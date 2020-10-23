@@ -7,7 +7,8 @@ export default (app: Application) => {
   router.post('/wechat', controller.receiveMsg.index);
 
   router.get('/getFollowers', controller.user.index);
-  router.get('/user/info', controller.user.info);
+  router.get('/user/info', controller.user.info)
+  router.get('/user/list', controller.user.list);
 
   router.post('/menu/create', controller.menu.index);
   router.get('/menu/list', controller.menu.list);

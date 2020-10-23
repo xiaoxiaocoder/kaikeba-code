@@ -17,6 +17,7 @@ import 'egg-view';
 import 'egg-wechat-api';
 import 'egg-redis';
 import 'egg-xml-body';
+import 'egg-sequelize';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -35,5 +36,6 @@ declare module 'egg' {
     wechatApi?: EggPluginItem;
     redis?: EggPluginItem;
     xmlBody?: EggPluginItem;
+    sequelize?: EggPluginItem;
   }
 }

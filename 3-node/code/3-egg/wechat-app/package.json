@@ -10,7 +10,7 @@
   "scripts": {
     "start": "egg-scripts start --daemon --title=egg-server-wechat-app",
     "stop": "egg-scripts stop --title=egg-server-wechat-app",
-    "dev": "egg-bin dev --port 80",
+    "dev": "egg-bin dev --port 8100",
     "debug": "egg-bin debug",
     "test-local": "egg-bin test",
     "test": "npm run lint -- --fix && npm run test-local",
@@ -20,15 +20,19 @@
     "autod": "autod",
     "lint": "eslint . --ext .ts",
     "clean": "ets clean",
-    "nat": "./tools/natapp -authtoken=b3cf20d1febfc88b"
+    "nat": "./tools/natapp -authtoken=b3cf20d1febfc88b",
+    "postinstall": "patch-package",
+    "reids:start": "docker run --name redis -p 47346:6379 -d --restart=always redis redis-server --appendonly yes --requirepass \"ojNKIAnC3FEwXTfI\""
   },
   "dependencies": {
     "crypto": "^1.0.1",
     "egg": "^2.6.1",
     "egg-redis": "^2.4.0",
     "egg-scripts": "^2.6.0",
+    "egg-sequelize": "^6.0.0",
     "egg-wechat-api": "^1.2.2",
     "egg-xml-body": "^1.0.3",
+    "sqlite3": "^5.0.0",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
@@ -42,6 +46,8 @@
     "egg-mock": "^3.16.0",
     "eslint": "^6.7.2",
     "eslint-config-egg": "^8.0.0",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "tslib": "^1.9.0",
     "typescript": "^3.0.0"
   },
