@@ -1,3 +1,4 @@
 .history
 node_modules
 dist
+7-flutter/{code, 笔记}/{ios, android}/*
