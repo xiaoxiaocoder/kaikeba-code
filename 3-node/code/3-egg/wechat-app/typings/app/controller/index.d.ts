@@ -7,6 +7,7 @@ import ExportHome from '../../../app/controller/Home';
 import ExportMenu from '../../../app/controller/Menu';
 import ExportReceiveMsg from '../../../app/controller/ReceiveMsg';
 import ExportUser from '../../../app/controller/User';
+import ExportAdminWeChat from '../../../app/controller/admin/WeChat';
 
 declare module 'egg' {
   interface IController {
@@ -15,5 +16,8 @@ declare module 'egg' {
     menu: ExportMenu;
     receiveMsg: ExportReceiveMsg;
     user: ExportUser;
+    admin: {
+      weChat: ExportAdminWeChat;
+    }
   }
 }

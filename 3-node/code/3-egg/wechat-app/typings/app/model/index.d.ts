@@ -3,9 +3,11 @@
 
 import 'egg';
 import ExportUser from '../../../app/model/User';
+import ExportWeChat from '../../../app/model/WeChat';
 
 declare module 'egg' {
   interface IModel {
     User: ReturnType<typeof ExportUser>;
+    WeChat: ReturnType<typeof ExportWeChat>;
   }
 }

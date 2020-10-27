@@ -2,6 +2,12 @@
 
 [Hacker News](https://news.ycombinator.com/) showcase using typescript && egg
 
+## TODO
+阅读 node_modules/sequelize
+- [] 后台管理页面
+- [] 多微信公众号数据隔离
+- [] 异常处理
+
 ## QuickStart
 
 ### Development
@@ -58,3 +64,4 @@ docker run -p 6379:6379 --name redis -v /usr/local/docker/redis.conf:/etc/redis/
 # 不挂载配置文件
 docker run --name redis -p 6379:6379 -d --restart=always redis redis-server --appendonly yes --requirepass "这是密码"
 ```
+

@@ -21,10 +21,11 @@ export default (appInfo: EggAppInfo) => {
     },
     security: {
       csrf: {
-        // enable: false
+        enable: false,
         ignore: '/wechat',
       }
     },
+    // 启动事件中动态注册
     wechatApi: {
       appId: "wxd0cdd2abc6ca0e53",
       appSecret: "19e2cbfe3dd18503af7038630c220d63",
@@ -33,8 +34,8 @@ export default (appInfo: EggAppInfo) => {
     },
     redis: {
       client: {
-        // host: '172.19.132.241', // Redis host
-        host: '127.0.0.1', // Redis host
+        host: '172.19.132.241', // Redis host
+        // host: '127.0.0.1', // Redis host
         port: 47346,  // Redis port
         password: 'ojNKIAnC3FEwXTfI',
         db: 0,
@@ -66,7 +67,6 @@ export default (appInfo: EggAppInfo) => {
         },
         // 仅 SQLite 适用
         storage: './wechat.db',
-        operatorsAliases: false,
       }
   };
 
