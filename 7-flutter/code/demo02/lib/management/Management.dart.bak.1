@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'Firm.dart';
 
 class Management extends StatelessWidget {
-  Management({Key key}) : super(key: key);
+  // Management({Key key}) : super(key: key);
 
-  List<Firm> _dataList = [];
+  // List<Firm> _dataList = [];
 
-  @override
-  void initState() { 
-    print('123');
-    super.initState();
-    _dataList = getDataList();
-    print(_dataList);
-  }
-  getDataList() {
-    return Firm.resolveDataFromJsonString(data);
-  }
+  // @override
+  // void initState() {
+  //   _dataList = getDataList();
+  //   print(_dataList);
+  // }
+  // getDataList() {
+  //   return Firm.resolveDataFromJsonString(data);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +21,13 @@ class Management extends StatelessWidget {
       appBar: AppBar(
         title: Text('Management'),
       ),
-      // body: Center(child: Text('Management')),
-      body: ListView.builder(
-        itemCount: _dataList.length,
-        itemBuilder: (context, index) {
-          return Text(_dataList[index].name);
-        },
-      ),
+      body: Center(child: Text('Management')),
+      // body: ListView.builder(
+      //   itemCount: _dataList.length,
+      //   itemBuilder: (context, index) {
+      //     return Text(_dataList[index].name);
+      // },
+    // );
     );
   }
 }

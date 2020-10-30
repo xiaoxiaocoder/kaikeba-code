@@ -48,10 +48,11 @@ class FirmItem extends StatelessWidget {
                         ])
                   ],
                 ),
-                Divider(color: Colors.grey, height: 30),
+                // Divider(color: Colors.grey, height: 30),
+                Divider(),
                 // Divider(),
                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       new Column(children: <Widget>[
                         Text(
@@ -63,9 +64,23 @@ class FirmItem extends StatelessWidget {
                             style: textStyle)
                       ]),
                       Icon(
-                        Icons.chevron_right,
+                        Icons.lock_clock,
                         color: Colors.grey,
-                      )
+                      ),
+                      Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(right: 5),
+                                child: Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ]
+                          )
+                        )
                     ])
               ],
             )),

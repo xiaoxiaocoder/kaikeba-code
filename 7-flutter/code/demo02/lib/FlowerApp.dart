@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:demo02/discovery/Discovery.dart';
 import 'package:demo02/friends/Friends.dart';
-import 'package:demo02/management/Management.dart';
+// import 'package:demo02/management/Management.dart';
 import 'package:demo02/mine/Mine.dart';
+import 'company/Management.dart';
+import 'company/ManagementPullRefresh.dart';
 
 class FlowerApp extends StatefulWidget {
   FlowerApp({Key key}) : super(key: key);
@@ -16,7 +18,8 @@ class _FlowerAppState extends State<FlowerApp> {
   final List<Widget> _pages = [
     Friends(),
     Discovery(),
-    Management(),
+    // Management(),
+    ManagementPullRefresh(),
     Mine()
   ];
 
