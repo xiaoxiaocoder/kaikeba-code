@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import  'package:demo02/FlowerApp.dart';
+import 'package:provider/provider.dart';
 import 'GestureTask.dart';
 import 'ListViewScreen.dart';
 import 'GridViewScreen.dart';
 import 'SingleChildScrollViewScreen.dart';
 import 'package:demo02/NavigationScreen.dart';
 import 'package:demo02/WelcomeScreen.dart';
-
+import 'provider/company_list.dart';
 void main() {
-  runApp(MyApp());
+  // runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CompanyListProvider())
+      ], 
+      child: MyApp())
+  );
 }
 
 class MyApp extends StatelessWidget {

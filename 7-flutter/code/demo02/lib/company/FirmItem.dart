@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'FirmModel.dart';
+import 'Detail/CompanyDetailScreen.dart';
 
 class FirmItem extends StatelessWidget {
   final FirmModel model;
@@ -12,7 +13,6 @@ class FirmItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirmModel item = this.model;
     final TextStyle textStyle = TextStyle(color: Colors.grey);
-    // 暗号： 原来还可以这么玩
     return Container(
         padding: EdgeInsets.all(5),
         child: Card(
@@ -20,7 +20,9 @@ class FirmItem extends StatelessWidget {
           elevation: 2,
           child: InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed('/secondNavPage');
+              // Navigator.of(context).pushNamed('/secondNavPage');
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CompanyDetailScreen(model)));
             },
             child: Padding(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 15),
