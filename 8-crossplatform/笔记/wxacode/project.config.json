@@ -3,7 +3,7 @@
   "cloudfunctionRoot": "cloudfunctions/",
   "setting": {
     "urlCheck": true,
-    "es6": true,
+    "es6": false,
     "enhance": true,
     "postcss": true,
     "preloadBackgroundData": false,
@@ -35,11 +35,10 @@
     "minifyWXSS": true
   },
   "appid": "wxd47af566c312c60d",
-  "projectname": "miniprogram-demo",
-  "libVersion": "2.13.2",
+  "projectname": "wxacode",
+  "libVersion": "2.8.1",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
     "search": {
       "list": []

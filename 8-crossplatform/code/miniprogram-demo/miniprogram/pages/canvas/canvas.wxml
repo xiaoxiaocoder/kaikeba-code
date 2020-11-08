@@ -1,0 +1,4 @@
+<canvas id="canvas" type="2d"  style="width300px;height:300px;"></canvas>
+<button type="primary" bindtap="setSavePhotosAlbumPermission" size="default">设置保存到相册权限</button>
+
+<button type="primary" bindtap="saveToPhotosAlbum" >保存到相册</button>

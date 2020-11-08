@@ -1,0 +1,6 @@
+/* miniprogram/pages/canvers.wxss */
+button{
+  width: 80vw !important;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
