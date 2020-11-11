@@ -1,0 +1,6 @@
+<view>
+	<text>WeChat Custom Components</text>
+</view>
+<slot>
+	<h2 class="title">{{name}}</h2>
+</slot>

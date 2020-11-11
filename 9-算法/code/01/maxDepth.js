@@ -32,19 +32,11 @@
 /**
  * @param {TreeNode} root
  * @return {number}
- * [3,9,20,null,null,15,7]，
+ * 暗号：今天天气真不错
  */
-var maxDepth = function(root) {
-  let depth = 1
-  if(root && root.val && (root.left || root.right)) {
-    depth++
-    let left = maxDepth(root.left)
-    let right = maxDepth(root.right)
-    if(left || right) {
-      depth++
-    }
-    return depth
-  } else {
-    return 0
-  }
+var maxDepth = function (root) {
+  if (!root) return 0;
+  var left = maxDepth(root.left);
+  var right = maxDepth(root.right);
+  return Math.max(left, right) + 1;
 };

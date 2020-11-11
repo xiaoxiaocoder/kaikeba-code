@@ -1,25 +1,30 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-
 		{
 			"path": "pages/tabBar/component/component",
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-
-		}, {
+		}, 
+		{
 			"path": "pages/tabBar/API/API",
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
 
-		}, {
+		}, 
+		{
 			"path": "pages/tabBar/extUI/extUI",
 			"style": {
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"usingComponents": {
+					// #ifdef MP-WEIXIN || MP-QQ
+					"custom": "/wxcomponents/custom/index"
+					// #endif
+				}
 			}
 
 		}, {
@@ -30,8 +35,8 @@
 			}
 
 		}
-	    ,{
-            "path" : "components/uLink",
+        ,{
+            "path" : "pages/component/view/view",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

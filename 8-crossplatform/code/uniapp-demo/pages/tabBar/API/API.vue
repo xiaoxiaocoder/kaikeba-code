@@ -1,6 +1,6 @@
 <template>
 	<view>
-		
+		API
 	</view>
 </template>
 
@@ -12,7 +12,9 @@
 			}
 		},
 		methods: {
-			
+			onTabItemTap: (...args) => {
+				console.log(args)
+			}
 		}
 	}
 </script>

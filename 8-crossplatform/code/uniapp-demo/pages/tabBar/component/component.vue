@@ -1,8 +1,11 @@
 <template>
+	<page-meta>
+		<navigation-bar />
+	</page-meta>
 	<view class="uni-container">
-		<view class="uni-header-logo">
+		<!-- 	<view class="uni-header-logo">
 			<image class="uni-header-image" src="/static/image/componentIndex.png"></image>
-		</view>
+		</view> -->
 		<view class="uni-hello-text">
 			<text class="hello-text">uni-app内置组件，展示样式仅供参考，文档详见：</text>
 			<u-link class="hello-link" :href="'https://uniapp.dcloud.io/component/'" :text="'https://uniapp.dcloud.io/component/'"
@@ -19,6 +22,11 @@
 					<text class="uni-navigate-icon uni-icon">&#xe470;</text>
 				</view>
 			</view>
+		</view>
+
+		<view class="toTop">
+			<text class="uni-icon uni-icon-arrowup"></text>
+			<!-- 这里可以放一个向上箭头，它距离底部tabbar上浮10px-->
 		</view>
 	</view>
 </template>
@@ -136,10 +144,52 @@
 				],
 				navigateFlag: false
 			}
+		},
+		methods:{
+			triggerCollapse(index) {
+				const item = this.list[index]
+				item.open = !item.open
+			},
+			goDetailPage(item) {
+				console.log(item)
+				if(this.navigateFlag) {
+					return
+				}
+				this.navigateFlag = true;
+				if(typeof item === 'string') {
+					uni.navigateTo({
+						url: `/pages/component/${item}/${item}`
+					})
+				} else {
+					uni.navigateTo({
+						url: item.url
+					})
+				}
+				
+				setTimeout(() => {
+					this.navigateFlag = false
+				}, 2e3)
+			}
 		}
 	}
 </script>
 
 <style>
 	@import '../../../common/uni-nvue.css';
+
+	.toTop {
+		position: absolute;
+		right: 20rpx;
+		bottom: calc(var(--window-bottom) + 10px);
+		width: 60rpx;
+		height: 60rpx;
+		border-radius: 50%;
+		text-align: center;
+		line-height: 60rpx;
+		background-color: rgba(0, 0, 0, .4);
+	}
+	.toTop .uni-icon {
+		color: #fff;
+		font-size: 16px;
+	}
 </style>

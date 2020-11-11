@@ -1,6 +1,9 @@
 <template>
 	<view>
-		component pageIndex
+		<text>component pageIndex</text>
+		<custom name="uni-app">
+			<text>slot text</text>
+		</custom>
 	</view>
 </template>
 
