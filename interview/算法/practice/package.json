@@ -1,0 +1,17 @@
+{
+  "name": "practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "3-三数求和.js",
+  "scripts": {
+    "test: list": "jest __tests__/list.spec.js --watch"
+  },
+  "keywords": [],
+  "author": "zhaoyan",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "babel-jest": "^26.6.3"
+  }
+}
