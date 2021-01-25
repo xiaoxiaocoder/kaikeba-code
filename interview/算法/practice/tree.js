@@ -60,3 +60,28 @@ function postorder(node) {
 }
 console.log()
 postorder(root)
+
+
+
+export function BFS(root) {
+  // 初始化队列queue
+  const queue = []
+  // 根节点入队
+  queue.push(root)
+  // 队列不为空, 说明没有遍历完全
+  while(queue.length) {
+    const top = queue[0]
+
+    console.log('top :>> ', top);
+    if(top.left) {
+      queue.push(top.left)
+    }
+
+    if(top.right) {
+      queue.push(top.right)
+    }
+
+    // 访问完毕, 出队
+    queue.shift()
+  }
+}
